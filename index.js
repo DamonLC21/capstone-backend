@@ -5,6 +5,7 @@ const userRouter = require('./routes/user-routes')
 const avatarRouter = require('./routes/avatar-routes')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const bcrypt = require('bcrypt')
 
 app.listen(port, () => console.log(`listening on port ${port}`))
 
