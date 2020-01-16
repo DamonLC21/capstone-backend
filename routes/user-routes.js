@@ -5,8 +5,6 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const SECRET = "stuff"
 
-
-
     router.get('/users', (request, response) => {
         queries
             .user

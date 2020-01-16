@@ -1,12 +1,23 @@
 const connection = require('./knexfile')[process.env.NODE_ENV || 'development']
 const database = require('knex')(connection)
 const bcrypt = require('bcrypt')
-const { body } = require('express-validator')
 
 module.exports = {
     user: {
         getAll: () => {
             return database('users')
+            .then(users => {
+                const promises = users.map(user => {
+                    return database('avatars')
+                        .where({id: user.avatar_id})
+                        .first()
+                        .then(avatar => {
+                            user.avatar = avatar
+                            return user
+                        })
+                })
+                return Promise.all(promises)
+            })
         },
         createUser: (user) => {
             return bcrypt.hash(user.password, 12)
@@ -35,6 +46,11 @@ module.exports = {
             return database('users')
                 .where({username: user.username})
                 .first()
+        }
+    },
+    action: {
+        getAll: () => {
+            return database('actions')
         }
     }
 }
