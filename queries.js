@@ -8,12 +8,18 @@ module.exports = {
             return database('users')
             .then(users => {
                 const promises = users.map(user => {
-                    return database('avatars')
-                        .where({id: user.avatar_id})
-                        .first()
-                        .then(avatar => {
-                            user.avatar = avatar
-                            return user
+                    return database('user-actions')
+                        .join('actions', 'actions.id', 'user-actions.action_id')
+                        .where('user_id', user.id)
+                        .then(actions => {
+                            user.actions = actions
+                            return database('avatars')
+                                .where({id: user.avatar_id})
+                                .first()
+                                .then(avatar => {
+                                    user.avatar = avatar
+                                    return user
+                                })
                         })
                 })
                 return Promise.all(promises)
