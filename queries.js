@@ -39,6 +39,16 @@ module.exports = {
                         .then(users => users[0])
                 })
             
+        },
+        deleteUser: (id) => {
+            return database('user-actions')
+                .where('user_id', id)
+                .delete()
+                .then(() => {
+                    return database('users')
+                        .where('id', id)
+                        .delete()
+                })
         }
 
     },

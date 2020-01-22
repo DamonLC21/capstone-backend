@@ -48,5 +48,12 @@ const SECRET = "stuff"
             })
     })
 
+    router.delete('/users/:id', (request, response) => {
+        queries
+            .user
+            .deleteUser(request.params.id)
+            .then(r => response.send(204))
+    })
+
 
 module.exports = router
