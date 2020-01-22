@@ -14,15 +14,21 @@ const SECRET = "stuff"
     })
 
     router.post('/users', (request, response) => {
-        // if(queries.user.findUser(request.body)){
-        //     response.send("Username already exists")
-        // }
-        // else{
-        //     queries.user.createUser(request.body)
-        //     .then(user => response.json(user))
-        // }  
-        queries.user.createUser(request.body)
+        queries
+            .user
+            .createUser(request.body)
             .then(user => response.json(user))
+            // .validateUsernameUniqueness(request.body)
+            // .then(user => {
+            //     if(user){
+            //         response.status(401).json({error: "Username already exists"})
+            //     } else {
+            //         queries
+            //         .user
+            //         .createUser(request.body)
+            //         .then(user => response.json(user))
+            //     }
+            // }) 
     })
 
     router.post('/login', (request, response) => {

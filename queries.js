@@ -2,6 +2,7 @@ const connection = require('./knexfile')[process.env.NODE_ENV || 'development']
 const database = require('knex')(connection)
 const bcrypt = require('bcrypt')
 
+
 module.exports = {
     user: {
         getAll: () => {
@@ -49,6 +50,11 @@ module.exports = {
                         .where('id', id)
                         .delete()
                 })
+        },
+        validateUsernameUniqueness: (user) => {
+            return database('users')
+                .where({username: user.username})
+                .first()
         }
 
     },
