@@ -6,7 +6,7 @@ exports.up = function(knex) {
       userAction.foreign('user_id').references('id').inTable('users')
       userAction.integer('action_id')
       userAction.foreign('action_id').references('id').inTable('actions')
-      userAction.date('dateCompleted').defaultsTo(new Date().toISOString())
+      userAction.date('dateCompleted').defaultsTo(knex.fn.now())
   })
 };
 
